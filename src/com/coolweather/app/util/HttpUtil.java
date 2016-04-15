@@ -6,8 +6,12 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-public class HttpUtil {
+import com.coolweather.app.activity.WeatherActivity;
 
+import android.os.Message;
+
+public class HttpUtil {
+	
 	public static void sendHttpRequest(final String address,
 			final HttpCallbackListener listener){
 		new Thread(new Runnable() {
@@ -21,6 +25,14 @@ public class HttpUtil {
 					connection.setRequestMethod("GET");
 					connection.setConnectTimeout(8000);
 					connection.setReadTimeout(8000);
+//					connection.setRequestProperty("Charsert", "UTF-8");  
+//					connection.setRequestProperty("contentType", "UTF-8"); 
+					
+					
+//					connection.setRequestProperty("Content-type", "application/x-www-form-urlencoded;charset=UTF-8");
+					
+					connection.setRequestProperty("Content-type", "application/x-java-serialized-object");
+					
 					InputStream in=connection.getInputStream();
 					BufferedReader reader=new BufferedReader(new InputStreamReader(in));
 					StringBuilder response=new StringBuilder();
@@ -28,6 +40,7 @@ public class HttpUtil {
 					while((line=reader.readLine())!=null){
 						response.append(line);
 					}
+					reader.close();
 					if(listener!=null){
 						//回调onFinish方法
 						listener.onFinish(response.toString());
@@ -38,6 +51,7 @@ public class HttpUtil {
 					}
 				}finally{
 					if(connection!=null){
+						
 						connection.disconnect();
 					}
 				}
