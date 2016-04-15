@@ -83,6 +83,8 @@ public class WeatherActivity extends Activity implements OnClickListener {
 		currentDateText=(TextView) findViewById(R.id.current_date);
 		switchCity=(Button) findViewById(R.id.switch_city);
 		refreshWeather=(Button) findViewById(R.id.refresh_weather);
+		switchCity.setOnClickListener(this);
+		refreshWeather.setOnClickListener(this);
 		
 		Log.d("WeatherActivity", "0");
 		
